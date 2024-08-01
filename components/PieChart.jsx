@@ -1,30 +1,34 @@
-import { PieChart } from '@mui/x-charts/PieChart';
+import React from 'react';
+import { PieChart, Pie, Sector, Cell, Tooltip } from 'recharts';
 
 const data = [
-  { value: 10, label: 'Category 1' },
-  { value: 20, label: 'Category 2' },
-  { value: 30, label: 'Category 3' },
-  { value: 40, label: 'Category 4' },
+  { name: 'Sales', value: 12000 },
+  { name: 'Orders', value: 6000 },
 ];
 
-const PieChartComponent = () => {
+const COLORS = ['#8884d8', '#82ca9d'];
+
+const SalesVsOrdersPieChart = () => {
   return (
-    <PieChart
-      series={[
-        {
-          data: data,
-          innerRadius: 30,
-          outerRadius: 100,
-          paddingAngle: 5,
-          cornerRadius: 5,
-          startAngle: -90,
-          endAngle: 180,
-          cx: 150,
-          cy: 150,
-        },
-      ]}
-    />
+    <PieChart width={400} height={400}>
+      <Pie
+        data={data}
+        cx={200}
+        cy={200}
+        innerRadius={60}
+        outerRadius={80}
+        fill="#8884d8"
+        paddingAngle={5}
+        dataKey="value"
+        label={(entry) => `${entry.name}: ${entry.value}`}
+      >
+        {data.map((entry, index) => (
+          <Cell key={index} fill={COLORS[index % COLORS.length]} />
+        ))}
+      </Pie>
+      <Tooltip />
+    </PieChart>
   );
 };
 
-export default PieChartComponent;
+export default SalesVsOrdersPieChart;
